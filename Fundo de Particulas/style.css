@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Ubuntu', sans-serif;
+    height: 100%;
+    background: #6959CD;
+}
+
+a{
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+a:hover{
+    color: #e91e63;   
+}
+
+h1.header{
+    color:#e91e63;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+h2{
+    color:#443e3e;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+canvas{
+    height: 100vh;
+    z-index: -100000;
+    position: fixed;
+    top: 0px;
+}
+
+mb{
+    margin-bottom: 3rem;
+}
+
+.links-list ul li{
+    list-style: none;
+    margin-right: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 0;
+}
+
+.links-list h1{
+    color:#fff;
+    font-size: 2.5rem;
+}
+
+.footer{
+    margin-top: 6rem;
+}
+
+.footer p{
+    color:#fff;
+    font-size: 1.3rem;
+}
