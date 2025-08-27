@@ -1,0 +1,29 @@
+# 🚀 Projetos em JavaScript, HTML e CSS  
+
+Olá! 👋  
+Este repositório será o espaço onde vou reunir todos os meus projetos utilizando **JavaScript, HTML e CSS**.  
+
+A ideia é bem simples: cada pasta terá um projeto diferente, e estarei sempre atualizando com novas ideias e experimentos.  
+Se você encontrar algo útil por aqui, sinta-se à vontade para **baixar, testar ou modificar** do seu jeito.  
+
+---
+
+## 📂 Estrutura do repositório
+- Cada projeto terá sua própria pasta.  
+- Dentro de cada pasta você encontrará:
+  - `index.html`  
+  - `style.css`  
+  - `script.js`  
+  - `README.md` (explicando o projeto específico)  
+
+---
+
+## 🔧 Projetos já disponíveis
+- [Fundo de Partículas](./Fundo%20de%20partículas) ✨  
+
+*(em breve vou adicionando mais projetos por aqui!)*
+
+---
+
+Obrigado por visitar este cantinho de códigos 💻💙  
+Qualquer feedback ou sugestão será super bem-vindo!
