@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintony Chat - Conecte Corações</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Variáveis CSS - Design Romântico Moderno */
+        :root {
+            /* Cores Românticas Principais */
+            --primary-color: #f34a69;
+            --primary-dark: #e63956;
+            --secondary-color: #ff6b8a;
+            --accent-color: #ff8fab;
+            --romantic-pink: #ffb3d1;
+            --soft-pink: #ffd1e3;
+            
+            /* Cores de Tema Claro */
+            --bg-color: #fafafa;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(243, 74, 105, 0.15);
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --input-border: rgba(243, 74, 105, 0.1);
+            
+            /* Sombras e Efeitos */
+            --shadow-light: 0 4px 6px -1px rgba(243, 74, 105, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(243, 74, 105, 0.15);
+            --shadow-heavy: 0 25px 50px -12px rgba(243, 74, 105, 0.25);
+            --romantic-glow: 0 0 30px rgba(243, 74, 105, 0.3);
+            --soft-glow: 0 0 15px rgba(243, 74, 105, 0.2);
+            
+            /* Gradientes */
+            --gradient-primary: linear-gradient(135deg, #f34a69 0%, #ff6b8a 50%, #ff8fab 100%);
+            --gradient-secondary: linear-gradient(135deg, rgba(243, 74, 105, 0.1) 0%, rgba(255, 107, 138, 0.05) 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(243, 74, 105, 0.03) 0%, rgba(255, 139, 171, 0.02) 50%, rgba(255, 181, 209, 0.01) 100%);
+            
+            /* Corações */
+            --heart-primary: rgba(243, 74, 105, 0.7);
+            --heart-secondary: rgba(255, 107, 138, 0.6);
+            --heart-accent: rgba(255, 139, 171, 0.5);
+            --heart-soft: rgba(255, 181, 209, 0.4);
+        }
+
+        /* Tema Escuro */
+        [data-theme="dark"] {
+            --bg-color: #0f0f23;
+            --text-color: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --card-bg: rgba(30, 30, 60, 0.95);
+            --glass-bg: rgba(30, 30, 60, 0.4);
+            --glass-border: rgba(243, 74, 105, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --input-border: rgba(243, 74, 105, 0.15);
+            --gradient-secondary: linear-gradient(135deg, rgba(243, 74, 105, 0.15) 0%, rgba(255, 107, 138, 0.1) 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(243, 74, 105, 0.08) 0%, rgba(255, 139, 171, 0.05) 50%, rgba(255, 181, 209, 0.03) 100%);
+            --heart-primary: rgba(243, 74, 105, 0.9);
+            --heart-secondary: rgba(255, 107, 138, 0.8);
+            --heart-accent: rgba(255, 139, 171, 0.7);
+            --heart-soft: rgba(255, 181, 209, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Background dinâmico com gradientes sutis */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-hero);
+            z-index: -2;
+            transition: all 0.4s ease;
+        }
+
+        [data-theme="dark"] body {
+            background: radial-gradient(ellipse at top, #1e1e3f 0%, #0f0f23 50%, #000000 100%);
+        }
+
+        /* Sistema de Corações Flutuantes Elegantes */
+        .hearts-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            opacity: 0;
+            font-size: 20px;
+            color: var(--heart-primary);
+            filter: drop-shadow(0 0 8px currentColor);
+            animation: heartFloat 15s ease-in-out infinite;
+        }
+
+        .floating-heart.elegant {
+            animation: elegantHeartFloat 18s ease-in-out infinite;
+            color: var(--heart-secondary);
+        }
+
+        .floating-heart.romantic {
+            color: var(--heart-accent);
+            animation: romanticHeartFloat 16s ease-in-out infinite;
+            font-size: 24px;
+        }
+
+        .floating-heart.dreamy {
+            color: var(--heart-soft);
+            animation: dreamyHeartFloat 20s ease-in-out infinite;
+            font-size: 18px;
+            filter: drop-shadow(0 0 12px currentColor) blur(0.5px);
+        }
+
+        /* Animações dos corações */
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(90vh) translateX(20px) rotate(45deg) scale(0.8);
+            }
+            25% {
+                transform: translateY(75vh) translateX(-15px) rotate(90deg) scale(1.2);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) translateX(25px) rotate(180deg) scale(1);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateY(25vh) translateX(-20px) rotate(270deg) scale(1.1);
+                opacity: 0.7;
+            }
+            90% {
+                transform: translateY(10vh) translateX(15px) rotate(340deg) scale(0.8);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0) rotate(360deg) scale(0.4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes elegantHeartFloat {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+                transform: translateY(85vh) translateX(30px) rotate(60deg) scale(0.9);
+            }
+            30% {
+                transform: translateY(70vh) translateX(-25px) rotate(120deg) scale(1.3);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(40vh) translateX(35px) rotate(200deg) scale(1.1);
+                opacity: 0.8;
+            }
+            70% {
+                transform: translateY(20vh) translateX(-30px) rotate(280deg) scale(1.2);
+                opacity: 0.6;
+            }
+            85% {
+                transform: translateY(5vh) translateX(20px) rotate(330deg) scale(0.7);
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes romanticHeartFloat {
+            0%, 100% {
+                transform: translateY(100vh) translateX(-20px) rotate(0deg) scale(0.4);
+                opacity: 0;
+            }
+            12% {
+                opacity: 0.7;
+                transform: translateY(88vh) translateX(40px) rotate(50deg) scale(0.7);
+            }
+            35% {
+                transform: translateY(65vh) translateX(-35px) rotate(140deg) scale(1.4);
+                opacity: 1;
+            }
+            55% {
+                transform: translateY(35vh) translateX(45px) rotate(220deg) scale(1);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateY(15vh) translateX(-40px) rotate(300deg) scale(1.1);
+                opacity: 0.5;
+            }
+            90% {
+                transform: translateY(2vh) translateX(25px) rotate(350deg) scale(0.6);
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes dreamyHeartFloat {
+            0%, 100% {
+                transform: translateY(100vh) translateX(10px) rotate(0deg) scale(0.6);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.6;
+                transform: translateY(92vh) translateX(-25px) rotate(30deg) scale(0.8);
+            }
+            25% {
+                transform: translateY(75vh) translateX(40px) rotate(100deg) scale(1.1);
+                opacity: 1;
+            }
+            45% {
+                transform: translateY(55vh) translateX(-30px) rotate(180deg) scale(1.3);
+                opacity: 0.8;
+            }
+            65% {
+                transform: translateY(35vh) translateX(35px) rotate(260deg) scale(0.9);
+                opacity: 0.7;
+            }
+            80% {
+                transform: translateY(20vh) translateX(-20px) rotate(320deg) scale(1);
+                opacity: 0.4;
+            }
+            95% {
+                transform: translateY(5vh) translateX(15px) rotate(360deg) scale(0.5);
+                opacity: 0.1;
+            }
+        }
+
+        /* Elementos flutuantes de fundo */
+        .floating-bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border: 2px solid var(--glass-border);
+            border-radius: 50%;
+            animation: floatRotate 25s linear infinite;
+            opacity: 0.6;
+        }
+
+        .floating-circle:nth-child(1) {
+            width: 280px;
+            height: 280px;
+            top: 15%;
+            left: 10%;
+            animation-duration: 20s;
+            box-shadow: var(--soft-glow);
+        }
+
+        .floating-circle:nth-child(2) {
+            width: 180px;
+            height: 180px;
+            top: 65%;
+            right: 15%;
+            animation-duration: 30s;
+            animation-direction: reverse;
+            border-color: var(--primary-color);
+        }
+
+        .floating-circle:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            right: 25%;
+            animation-duration: 18s;
+            border-color: var(--secondary-color);
+        }
+
+        .floating-circle:nth-child(4) {
+            width: 200px;
+            height: 200px;
+            top: 40%;
+            left: 5%;
+            animation-duration: 35s;
+            border-color: var(--accent-color);
+        }
+
+        .floating-circle:nth-child(5) {
+            width: 150px;
+            height: 150px;
+            top: 80%;
+            left: 70%;
+            animation-duration: 22s;
+            border-color: var(--romantic-pink);
+        }
+
+        @keyframes floatRotate {
+            from { transform: rotate(0deg) translateY(0px); }
+            50% { transform: rotate(180deg) translateY(-20px); }
+            to { transform: rotate(360deg) translateY(0px); }
+        }
+
+        /* Header Moderno */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0 clamp(16px, 5vw, 32px);
+            height: clamp(60px, 12vw, 80px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            box-shadow: var(--romantic-glow);
+            animation: headerGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Logo Elegante */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 2vw, 16px);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: clamp(40px, 8vw, 56px);
+            height: clamp(40px, 8vw, 56px);
+            background: var(--gradient-primary);
+            border-radius: clamp(8px, 2vw, 16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--romantic-glow);
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: logoSpin 4s linear infinite;
+        }
+
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-icon i {
+            font-size: clamp(20px, 4vw, 28px);
+            color: white;
+            z-index: 2;
+            animation: heartBeat 2.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-brand {
+            font-size: clamp(18px, 4vw, 28px);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: clamp(8px, 1.5vw, 12px);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 2px;
+        }
+
+        /* Botões do Header */
+        .header-buttons {
+            display: flex;
+            gap: clamp(8px, 2vw, 16px);
+            align-items: center;
+        }
+
+        .header-btn {
+            padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 24px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            border-radius: clamp(8px, 2vw, 16px);
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: clamp(4px, 1vw, 8px);
+            font-size: clamp(10px, 2vw, 14px);
+        }
+
+        .header-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .header-btn:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--romantic-glow);
+            transform: translateY(-2px);
+            color: var(--primary-color);
+        }
+
+        .header-btn:hover::before {
+            left: 100%;
+        }
+
+        .header-btn-primary {
+            background: var(--gradient-primary);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+
+        .header-btn-primary:hover {
+            box-shadow: var(--romantic-glow), var(--shadow-heavy);
+            transform: translateY(-3px) scale(1.05);
+            color: white;
+        }
+
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 50%;
+            width: clamp(40px, 8vw, 52px);
+            height: clamp(40px, 8vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-color);
+            backdrop-filter: blur(20px);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+            border-color: var(--primary-color);
+            box-shadow: var(--romantic-glow);
+        }
+
+        /* Hero Section Romântica */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(100px, 15vw, 120px) clamp(16px, 5vw, 24px) clamp(60px, 10vw, 80px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: clamp(320px, 90vw, 900px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 6rem);
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: clamp(16px, 4vw, 32px);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            animation: titleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: clamp(24px, 6vw, 48px);
+            font-weight: 400;
+            max-width: clamp(280px, 85vw, 700px);
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            animation: subtitleFade 4s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFade {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: clamp(12px, 3vw, 24px);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: clamp(40px, 8vw, 80px);
+        }
+
+        .hero-btn {
+            padding: clamp(14px, 3vw, 20px) clamp(20px, 5vw, 40px);
+            border: none;
+            border-radius: clamp(10px, 2.5vw, 20px);
+            font-size: clamp(14px, 3vw, 18px);
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(6px, 1.5vw, 12px);
+            min-width: clamp(180px, 40vw, 220px);
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            border: 2px solid var(--primary-color);
+            box-shadow: var(--romantic-glow);
+        }
+
+        .hero-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 0 40px var(--primary-color),
+                0 0 80px rgba(243, 74, 105, 0.3),
+                var(--shadow-heavy);
+        }
+
+        .hero-btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .hero-btn-secondary {
+            background: var(--glass-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+        }
+
+        .hero-btn-secondary:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--romantic-glow);
+            transform: translateY(-4px) scale(1.05);
+            background: rgba(243, 74, 105, 0.05);
+        }
+
+        /* Cards de Estatísticas Românticas */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 40vw, 220px), 1fr));
+            gap: clamp(16px, 4vw, 32px);
+            margin-top: clamp(30px, 6vw, 60px);
+            max-width: clamp(320px, 90vw, 800px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: clamp(12px, 3vw, 24px);
+            padding: clamp(20px, 5vw, 40px) clamp(12px, 3vw, 24px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-light);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.6s ease;
+            border-radius: clamp(12px, 3vw, 24px) clamp(12px, 3vw, 24px) 0 0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: var(--romantic-glow);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-color);
+            margin-bottom: clamp(6px, 1.5vw, 12px);
+            animation: numberGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 20px currentColor); }
+        }
+
+        .stat-label {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mockup de Celular */
+        .phone-mockup-section {
+            padding: clamp(60px, 12vw, 120px) clamp(16px, 5vw, 24px);
+            background: var(--gradient-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-container {
+            max-width: clamp(320px, 95vw, 1200px);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: clamp(40px, 8vw, 80px);
+            align-items: center;
+        }
+
+        .phone-content {
+            order: 1;
+            text-align: center;
+        }
+
+        .phone-title {
+            font-size: clamp(1.8rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--text-color);
+            margin-bottom: clamp(12px, 3vw, 24px);
+            line-height: 1.2;
+        }
+
+        .phone-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-bottom: clamp(20px, 5vw, 40px);
+            line-height: 1.6;
+        }
+
+        .phone-features {
+            list-style: none;
+            margin-bottom: clamp(20px, 5vw, 40px);
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .phone-features li {
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 2vw, 16px);
+            margin-bottom: clamp(8px, 2vw, 16px);
+            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+            color: var(--text-color);
+            padding: clamp(8px, 2vw, 12px);
+            background: var(--glass-bg);
+            border-radius: clamp(8px, 2vw, 12px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .phone-features li:hover {
+            transform: translateX(8px);
+            border-color: var(--primary-color);
+            background: rgba(243, 74, 105, 0.05);
+        }
+
+        .phone-features li i {
+            color: var(--primary-color);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            width: clamp(20px, 4vw, 24px);
+            text-align: center;
+            min-width: clamp(20px, 4vw, 24px);
+        }
+
+        .phone-mockup {
+            order: 2;
+            position: relative;
+            width: clamp(200px, 50vw, 300px);
+            height: clamp(400px, 100vw, 600px);
+            margin: 0 auto;
+            border-radius: clamp(20px, 5vw, 40px);
+            background: linear-gradient(145deg, #e6e6e6 0%, #ffffff 100%);
+            box-shadow: 
+                0 0 0 clamp(4px, 1vw, 8px) rgba(0, 0, 0, 0.1),
+                0 0 0 clamp(6px, 1.5vw, 12px) rgba(255, 255, 255, 0.8),
+                0 clamp(12px, 3vw, 25px) clamp(25px, 6vw, 50px) rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            animation: phoneFloat 6s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] .phone-mockup {
+            background: linear-gradient(145deg, #2d3748 0%, #4a5568 100%);
+            box-shadow: 
+                0 0 0 clamp(4px, 1vw, 8px) rgba(255, 255, 255, 0.1),
+                0 0 0 clamp(6px, 1.5vw, 12px) rgba(0, 0, 0, 0.3),
+                0 clamp(12px, 3vw, 25px) clamp(25px, 6vw, 50px) rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes phoneFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(5deg); }
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: clamp(6px, 1.5vw, 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(60px, 15vw, 120px);
+            height: clamp(12px, 3vw, 24px);
+            background: #000;
+            border-radius: clamp(6px, 1.5vw, 12px);
+            z-index: 10;
+        }
+
+        .phone-screen {
+            position: absolute;
+            top: clamp(12px, 3vw, 24px);
+            left: clamp(12px, 3vw, 24px);
+            right: clamp(12px, 3vw, 24px);
+            bottom: clamp(12px, 3vw, 24px);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: clamp(14px, 3.5vw, 28px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-status-bar {
+            height: clamp(20px, 5vw, 40px);
+            background: rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 clamp(10px, 2.5vw, 20px);
+            color: white;
+            font-size: clamp(8px, 2vw, 12px);
+            font-weight: 600;
+        }
+
+        .phone-app-content {
+            flex: 1;
+            background: var(--card-bg);
+            margin: clamp(4px, 1vw, 8px);
+            border-radius: clamp(10px, 2.5vw, 20px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        [data-theme="dark"] .phone-app-content {
+            background: rgba(30, 30, 60, 0.95);
+        }
+
+        .phone-app-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: clamp(10px, 2.5vw, 20px);
+            text-align: center;
+            position: relative;
+        }
+
+        .phone-app-title {
+            font-size: clamp(12px, 3vw, 18px);
+            font-weight: 700;
+            margin-bottom: clamp(4px, 1vw, 8px);
+        }
+
+        .phone-app-subtitle {
+            font-size: clamp(8px, 2vw, 12px);
+            opacity: 0.9;
+        }
+
+        .phone-chat-area {
+            flex: 1;
+            padding: clamp(10px, 2.5vw, 20px);
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(8px, 2vw, 16px);
+            overflow-y: auto;
+            min-height: 200px;
+        }
+
+        [data-theme="dark"] .phone-chat-area {
+            background: rgba(15, 15, 35, 0.8);
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: clamp(6px, 1.5vw, 12px) clamp(8px, 2vw, 16px);
+            border-radius: clamp(9px, 2.2vw, 18px);
+            font-size: clamp(10px, 2.5vw, 14px);
+            line-height: 1.4;
+            animation: messageSlideIn 0.5s ease-out;
+            word-wrap: break-word;
+        }
+
+        .chat-message.sent {
+            background: var(--gradient-primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: clamp(3px, 0.7vw, 6px);
+        }
+
+        .chat-message.received {
+            background: white;
+            color: var(--text-color);
+            align-self: flex-start;
+            border-bottom-left-radius: clamp(3px, 0.7vw, 6px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .chat-message.received {
+            background: rgba(60, 60, 120, 0.9);
+            color: var(--text-color);
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .chat-input-area {
+            padding: clamp(8px, 2vw, 16px);
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: clamp(6px, 1.5vw, 12px);
+            align-items: center;
+        }
+
+        [data-theme="dark"] .chat-input-area {
+            background: rgba(30, 30, 60, 0.9);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: clamp(6px, 1.5vw, 12px) clamp(8px, 2vw, 16px);
+            border: 1px solid #e2e8f0;
+            border-radius: clamp(10px, 2.5vw, 20px);
+            font-size: clamp(10px, 2.5vw, 14px);
+            outline: none;
+            background: #f8f9fa;
+        }
+
+        [data-theme="dark"] .chat-input {
+            background: rgba(15, 15, 35, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        .chat-send-btn {
+            width: clamp(20px, 5vw, 40px);
+            height: clamp(20px, 5vw, 40px);
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: clamp(8px, 2vw, 12px);
+        }
+
+        .chat-send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--romantic-glow);
+        }
+
+        .floating-hearts-phone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .phone-heart {
+            position: absolute;
+            font-size: clamp(8px, 2vw, 16px);
+            color: var(--heart-primary);
+            opacity: 0;
+            animation: phoneHeartFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes phoneHeartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100%) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(80%) scale(1);
+            }
+            80% {
+                opacity: 0.8;
+                transform: translateY(20%) scale(0.8);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(0%) scale(0.3);
+            }
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: clamp(60px, 12vw, 120px) clamp(16px, 5vw, 24px);
+            position: relative;
+            background: var(--gradient-secondary);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .features-container {
+            max-width: clamp(320px, 95vw, 1400px);
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: clamp(40px, 8vw, 80px);
+        }
+
+        .features-title {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--text-color);
+            margin-bottom: clamp(12px, 3vw, 24px);
+            position: relative;
+            display: inline-block;
+        }
+
+        .features-title::after {
+            content: '';
+            position: absolute;
+            bottom: clamp(-6px, -1.5vw, -12px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(60px, 15vw, 120px);
+            height: clamp(2px, 0.5vw, 4px);
+            background: var(--gradient-primary);
+            border-radius: clamp(1px, 0.25vw, 2px);
+            box-shadow: var(--romantic-glow);
+            animation: underlineGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes underlineGlow {
+            0%, 100% { transform: translateX(-50%) scaleX(1); }
+            50% { transform: translateX(-50%) scaleX(1.3); }
+        }
+
+        .features-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            max-width: clamp(280px, 85vw, 700px);
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 70vw, 380px), 1fr));
+            gap: clamp(20px, 5vw, 40px);
+            margin-top: clamp(30px, 6vw, 60px);
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: clamp(14px, 3.5vw, 28px);
+            padding: clamp(24px, 6vw, 48px);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: clamp(2px, 0.5vw, 4px);
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.6s ease;
+            border-radius: clamp(14px, 3.5vw, 28px) clamp(14px, 3.5vw, 28px) 0 0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px) rotateX(2deg);
+            border-color: var(--primary-color);
+            box-shadow: var(--romantic-glow), var(--shadow-heavy);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: clamp(45px, 11vw, 90px);
+            height: clamp(45px, 11vw, 90px);
+            background: var(--gradient-primary);
+            border-radius: clamp(12px, 3vw, 24px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto clamp(16px, 4vw, 32px);
+            font-size: clamp(20px, 5vw, 40px);
+            color: white;
+            position: relative;
+            box-shadow: var(--romantic-glow);
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            inset: clamp(-2px, -0.5vw, -4px);
+            background: var(--gradient-primary);
+            border-radius: clamp(12px, 3vw, 24px);
+            z-index: -1;
+            animation: iconPulse 4s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+
+        .feature-title {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: clamp(10px, 2.5vw, 20px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: clamp(60px, 12vw, 120px) clamp(16px, 5vw, 24px);
+            text-align: center;
+            position: relative;
+            background: var(--gradient-hero);
+        }
+
+        .cta-content {
+            max-width: clamp(320px, 90vw, 800px);
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--text-color);
+            margin-bottom: clamp(16px, 4vw, 32px);
+            animation: ctaFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes ctaFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .cta-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-bottom: clamp(24px, 6vw, 48px);
+            line-height: 1.6;
+        }
+
+        /* Footer Moderno */
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--glass-border);
+            padding: clamp(40px, 8vw, 80px) clamp(16px, 5vw, 24px) clamp(20px, 4vw, 40px);
+            text-align: center;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            box-shadow: var(--romantic-glow);
+            animation: footerGlow 5s ease-in-out infinite;
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .footer-content {
+            max-width: clamp(320px, 95vw, 1200px);
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            margin-bottom: clamp(20px, 5vw, 40px);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: clamp(20px, 5vw, 40px);
+            margin-bottom: clamp(20px, 5vw, 40px);
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            font-size: clamp(10px, 2.5vw, 14px);
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+
+        .footer-text {
+            color: var(--text-tertiary);
+            font-size: clamp(10px, 2.5vw, 14px);
+            padding-top: clamp(16px, 4vw, 32px);
+            border-top: 1px solid var(--glass-border);
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+        }
+
+        /* Responsividade para Tablets */
+        @media (min-width: 768px) {
+            .phone-container {
+                grid-template-columns: 1fr 1fr;
+                text-align: left;
+            }
+
+            .phone-content {
+                order: 1;
+            }
+
+            .phone-mockup {
+                order: 2;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Responsividade para Desktop */
+        @media (min-width: 1024px) {
+            .header-btn span {
+                display: inline;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-links {
+                flex-direction: row;
+            }
+        }
+
+        /* Redução de movimento para usuários com preferência */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .hearts-container,
+            .floating-bg-elements {
+                display: none;
+            }
+        }
+
+        /* Otimizações de performance */
+        .hearts-container,
+        .floating-heart,
+        .floating-circle,
+        .logo-icon,
+        .phone-mockup {
+            will-change: transform;
+        }
+
+        /* Estados especiais */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Animações de entrada */
+        .fade-in {
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Melhorias para acessibilidade */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Transições suaves para mudança de tema */
+        * {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* Responsividade específica para celulares pequenos */
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 12px;
+                height: 60px;
+            }
+
+            .header-btn span {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-btn {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phone-features {
+                text-align: center;
+            }
+
+            .floating-circle {
+                opacity: 0.3;
+            }
+
+            .hearts-container {
+                opacity: 0.4;
+            }
+        }
+
+        /* Tema escuro específico para o celular */
+        [data-theme="dark"] .phone-screen {
+            background: linear-gradient(135deg, rgba(243, 74, 105, 0.9) 0%, rgba(255, 107, 138, 0.8) 100%);
+        }
+
+        [data-theme="dark"] .phone-status-bar {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animações de loading melhoradas */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .loading-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: loadingBounce 1.4s ease-in-out infinite both;
+        }
+
+        .loading-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes loadingBounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="fade-in" data-theme="light">
+    <!-- Corações Flutuantes Românticos -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Elementos flutuantes de fundo -->
+    <div class="floating-bg-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container" onclick="window.location.href='/'">
+            <div class="logo-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="logo-text">
+                <div class="logo-brand">Sintony</div>
+                <div class="logo-subtitle">CHAT</div>
+            </div>
+        </div>
+
+        <div class="header-buttons">
+            <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                <i class="fas fa-sun" id="sunIcon"></i>
+                <i class="fas fa-moon hidden" id="moonIcon"></i>
+            </button>
+            <button class="header-btn" id="loveMode">
+                <i class="fas fa-heart"></i>
+                <span>MODO AMOR</span>
+            </button>
+            <a href="login.php" class="header-btn header-btn-primary">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>ENTRAR</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">CONECTE CORAÇÕES<br/>CRIE HISTÓRIAS</h1>
+                <p class="hero-subtitle">
+                    Descubra conexões autênticas no futuro dos relacionamentos. 
+                    Converse, compartilhe momentos especiais e encontre pessoas que 
+                    realmente combinam com você através da nossa tecnologia avançada.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="cadastrar.php" class="hero-btn hero-btn-primary">
+                        <i class="fas fa-heart"></i>
+                        <span>CADASTRAR AGORA</span>
+                    </a>
+                    <a href="login.php" class="hero-btn hero-btn-secondary">
+                        <i class="fas fa-user-heart"></i>
+                        <span>JÁ TENHO CONTA</span>
+                    </a>
+                </div>
+
+                <!-- Estatísticas Românticas -->
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Conexões Ativas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Taxa de Match</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Sistema Online</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- Phone Mockup Section -->
+<section class="phone-mockup-section">
+    <div class="phone-container">
+        <div class="phone-content">
+            <h2 class="phone-title">EXPERIÊNCIA MÓVEL PERFEITA</h2>
+            <p class="phone-subtitle">
+                Converse onde estiver com nossa interface intuitiva e recursos avançados 
+                pensados para criar conexões românticas autênticas.
+            </p>
+            <ul class="phone-features">
+                <li><i class="fas fa-heart"></i> Matches inteligentes baseados em compatibilidade</li>
+                <li><i class="fas fa-video"></i> Chamadas de vídeo de alta qualidade</li>
+                <li><i class="fas fa-shield-alt"></i> Conversas criptografadas e seguras</li>
+                <li><i class="fas fa-bell"></i> Notificações personalizadas e discretas</li>
+                <li><i class="fas fa-camera"></i> Compartilhamento de fotos românticas</li>
+            </ul>
+            <div class="hero-buttons">
+                <a href="cadastrar.php" class="hero-btn hero-btn-primary">
+                    <i class="fas fa-download"></i>
+                    <span>BAIXAR APP</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+                <div class="phone-status-bar">
+                    <span>9:41</span>
+                    <span>●●●●●</span>
+                    <span>100%</span>
+                </div>
+                
+                <div class="phone-app-content">
+                    <div class="phone-app-header">
+                        <div class="phone-app-title">Sintony Chat</div>
+                        <div class="phone-app-subtitle">Ana está online</div>
+                    </div>
+                    
+                    <div class="phone-chat-area" id="phoneChatArea">
+                        <div class="chat-message received">
+                            Oi! Como foi seu dia?
+                        </div>
+                        <div class="chat-message sent">
+                            Oi Ana! Foi ótimo, obrigado por perguntar
+                        </div>
+                        <div class="chat-message received">
+                            Que bom! Tenho uma surpresa para você...
+                        </div>
+                        <div class="chat-message sent">
+                            Agora fiquei curioso!
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" placeholder="Digite uma mensagem...">
+                        <button class="chat-send-btn">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="floating-hearts-phone">
+                        <div class="phone-heart" style="left: 20%; animation-delay: 0s;">♥</div>
+                        <div class="phone-heart" style="left: 70%; animation-delay: 1s;">♥</div>
+                        <div class="phone-heart" style="left: 45%; animation-delay: 2s;">♥</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="features-container">
+        <div class="features-header">
+            <h2 class="features-title">RECURSOS AVANÇADOS</h2>
+            <p class="features-subtitle">
+                Uma experiência única de relacionamentos com tecnologia de ponta 
+                pensada para conectar almas digitais em um mundo real.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="feature-title">Chat Inteligente</h3>
+                <p class="feature-description">
+                    Sistema de mensagens com recursos avançados, tradução em tempo real 
+                    e sugestões personalizadas para conversas mais envolventes e românticas.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Segurança Total</h3>
+                <p class="feature-description">
+                    Proteção avançada dos seus dados pessoais com verificação de perfis 
+                    e sistema de segurança multicamadas para relacionamentos seguros.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="feature-title">Vídeo Chamadas</h3>
+                <p class="feature-description">
+                    Conversas por vídeo de alta qualidade com filtros românticos. 
+                    Conheça melhor seu match em chamadas privadas e seguras.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">Matches Perfeitos</h3>
+                <p class="feature-description">
+                    Algoritmo inteligente que analisa compatibilidade de personalidade, 
+                    interesses e valores para encontrar pessoas realmente especiais para você.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="feature-title">Pessoas Próximas</h3>
+                <p class="feature-description">
+                    Encontre pessoas interessantes na sua região e descubra 
+                    conexões que podem se transformar em encontros reais e relacionamentos.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">Sempre Conectado</h3>
+                <p class="feature-description">
+                    Interface responsiva que funciona perfeitamente em qualquer dispositivo. 
+                    Continue suas conversas do celular, tablet ou computador a qualquer hora.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2 class="cta-title">PRONTO PARA O FUTURO DO AMOR?</h2>
+        <p class="cta-subtitle">
+            Junte-se à revolução dos relacionamentos digitais e descubra 
+            conexões que transcendem o físico através da tecnologia.
+        </p>
+        <div class="hero-buttons">
+            <a href="cadastrar.php" class="hero-btn hero-btn-primary">
+                <i class="fas fa-heart"></i>
+                <span>CADASTRAR AGORA</span>
+            </a>
+        </div>
+    </div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+<div class="footer-content">
+    <div class="footer-logo">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="logo-text">
+                <div class="logo-brand">Sintony</div>
+                <div class="logo-subtitle">CHAT</div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="footer-links">
+        <a href="#about" class="footer-link">SOBRE</a>
+        <a href="#contact" class="footer-link">CONTATO</a>
+        <a href="#support" class="footer-link">SUPORTE</a>
+        <a href="#privacy" class="footer-link">PRIVACIDADE</a>
+        <a href="#terms" class="footer-link">TERMOS</a>
+        <a href="#api" class="footer-link">API</a>
+    </nav>
+
+    <p class="footer-text">
+        © 2024 SINTONY.CHAT - TODOS OS DIREITOS RESERVADOS<br/>
+        DESENVOLVIDO COM ♥ PARA O FUTURO DO AMOR
+    </p>
+</div>
+</footer>
+
+<script>
+// Gerenciador de Tema Moderno
+class ModernThemeManager {
+    constructor() {
+        this.body = document.body;
+        this.toggle = document.getElementById('themeToggle');
+        this.sunIcon = document.getElementById('sunIcon');
+        this.moonIcon = document.getElementById('moonIcon');
+        this.loveMode = document.getElementById('loveMode');
+        this.isLoveModeActive = false;
+        
+        this.loadTheme();
+        this.setupEventListeners();
+    }
+    
+    loadTheme() {
+        const savedTheme = localStorage.getItem('sintony-theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        this.setTheme(savedTheme);
+    }
+    
+    setTheme(theme) {
+        this.body.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        if (theme === 'dark') {
+            this.sunIcon.classList.add('hidden');
+            this.moonIcon.classList.remove('hidden');
+        } else {
+            this.sunIcon.classList.remove('hidden');
+            this.moonIcon.classList.add('hidden');
+        }
+        
+        localStorage.setItem('sintony-theme', theme);
+    }
+    
+    toggleTheme() {
+        const currentTheme = this.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        this.setTheme(newTheme);
+        
+        this.toggle.style.transform = 'scale(0.8) rotate(180deg)';
+        setTimeout(() => {
+            this.toggle.style.transform = '';
+        }, 300);
+    }
+    
+    toggleLoveMode() {
+        this.isLoveModeActive = !this.isLoveModeActive;
+        
+        if (this.isLoveModeActive) {
+            document.body.style.filter = 'hue-rotate(15deg) saturate(1.2) brightness(1.05)';
+            this.loveMode.innerHTML = '<i class="fas fa-heart-broken"></i><span>MODO NORMAL</span>';
+            this.intensifyHearts();
+        } else {
+            document.body.style.filter = '';
+            this.loveMode.innerHTML = '<i class="fas fa-heart"></i><span>MODO AMOR</span>';
+        }
+        
+        this.loveMode.style.transform = 'scale(0.9) rotateY(180deg)';
+        setTimeout(() => {
+            this.loveMode.style.transform = '';
+        }, 300);
+    }
+    
+    intensifyHearts() {
+        const heartsSystem = window.heartsSystem;
+        if (heartsSystem) {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => heartsSystem.createFloatingHeart(), i * 100);
+            }
+        }
+    }
+    
+    setupEventListeners() {
+        this.toggle?.addEventListener('click', () => this.toggleTheme());
+        this.loveMode?.addEventListener('click', () => this.toggleLoveMode());
+        
+        if (window.matchMedia) {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQuery.addEventListener('change', (e) => {
+                if (!localStorage.getItem('sintony-theme')) {
+                    this.setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
+    }
+}
+
+// Sistema de Corações Flutuantes Elegantes
+class RomanticHeartsSystem {
+    constructor() {
+        this.container = document.getElementById('heartsContainer');
+        this.hearts = [];
+        this.maxHearts = this.getMaxHearts();
+        this.isActive = true;
+        this.heartTypes = ['♥', '💕', '💖', '💗', '💘', '💙', '💜', '🧡'];
+        this.heartClasses = ['elegant', 'romantic', 'dreamy'];
+        
+        this.init();
+        this.animate();
+        this.setupPerformanceMonitoring();
+    }
+    
+    getMaxHearts() {
+        const width = window.innerWidth;
+        if (width <= 480) return 8;
+        if (width <= 768) return 15;
+        if (width <= 1024) return 25;
+        return 35;
+    }
+    
+    init() {
+        for (let i = 0; i < this.maxHearts; i++) {
+            setTimeout(() => this.createFloatingHeart(), i * 400);
+        }
+    }
+    
+    createFloatingHeart() {
+        if (!this.container || !this.isActive) return;
+        
+        const heart = document.createElement('div');
+        const heartType = this.heartTypes[Math.floor(Math.random() * this.heartTypes.length)];
+        const heartClass = this.heartClasses[Math.floor(Math.random() * this.heartClasses.length)];
+        const size = Math.random() * 10 + 16;
+        
+        heart.classList.add('floating-heart', heartClass);
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = size + 'px';
+        heart.style.animationDuration = Math.random() * 6 + 12 + 's';
+        heart.style.animationDelay = Math.random() * 4 + 's';
+        heart.textContent = heartType;
+        
+        this.container.appendChild(heart);
+        
+        setTimeout(() => {
+            if (heart.parentNode) {
+                heart.remove();
+            }
+        }, 25000);
+    }
+    
+    animate() {
+        setInterval(() => {
+            if (!document.hidden && this.isActive && this.container?.children.length < this.maxHearts) {
+                this.createFloatingHeart();
+            }
+        }, 2500);
+    }
+    
+    setupPerformanceMonitoring() {
+        document.addEventListener('visibilitychange', () => {
+            this.isActive = !document.hidden;
+            const hearts = this.container?.children;
+            if (hearts) {
+                Array.from(hearts).forEach(heart => {
+                    heart.style.animationPlayState = document.hidden ? 'paused' : 'running';
+                });
+            }
+        });
+        
+        let frameCount = 0;
+        let lastTime = performance.now();
+        
+        const checkPerformance = () => {
+            frameCount++;
+            const currentTime = performance.now();
+            
+            if (currentTime - lastTime >= 1000) {
+                const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                
+                if (fps < 30 && this.maxHearts > 15) {
+                    this.maxHearts = Math.max(15, this.maxHearts - 5);
+                }
+                
+                frameCount = 0;
+                lastTime = currentTime;
+            }
+            
+            requestAnimationFrame(checkPerformance);
+        };
+        
+        requestAnimationFrame(checkPerformance);
+    }
+    
+    destroy() {
+        this.isActive = false;
+        if (this.container) {
+            this.container.innerHTML = '';
+        }
+    }
+}
+
+// Sistema de Animações de Scroll
+class ScrollAnimationManager {
+    constructor() {
+        this.observer = new IntersectionObserver(
+            this.handleIntersection.bind(this),
+            { 
+                threshold: 0.1, 
+                rootMargin: '0px 0px -80px 0px' 
+            }
+        );
+        
+        this.setupAnimations();
+        this.setupScrollEffects();
+    }
+    
+    setupAnimations() {
+        const elements = document.querySelectorAll(
+            '.feature-card, .stat-card, .hero-content, .phone-content, .phone-mockup'
+        );
+        
+        elements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px) scale(0.95)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            el.dataset.animationDelay = index * 150;
+            this.observer.observe(el);
+        });
+    }
+    
+    handleIntersection(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = parseInt(entry.target.dataset.animationDelay) || 0;
+                
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                    entry.target.classList.add('animated');
+                }, delay);
+                
+                this.observer.unobserve(entry.target);
+            }
+        });
+    }
+    
+    setupScrollEffects() {
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('.header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                if (currentScrollY > lastScrollY) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+    }
+}
+
+// Sistema de Simulação do Chat no Celular
+class PhoneChatSimulator {
+    constructor() {
+        this.messages = [
+            { type: 'received', text: 'Oi! Como foi seu dia? 😊', delay: 1000 },
+            { type: 'sent', text: 'Oi Ana! Foi ótimo, obrigado por perguntar ❤️', delay: 2500 },
+            { type: 'received', text: 'Que bom! Tenho uma surpresa para você...', delay: 4000 },
+            { type: 'sent', text: 'Agora fiquei curioso! 😄', delay: 5500 },
+            { type: 'received', text: 'Vamos nos encontrar hoje à noite? 💕', delay: 7000 },
+            { type: 'sent', text: 'Claro! Mal posso esperar! 🥰', delay: 8500 }
+        ];
+        
+        this.currentMessageIndex = 0;
+        this.chatArea = document.getElementById('phoneChatArea');
+        this.isRunning = false;
+        
+        this.init();
+    }
+    
+    init() {
+        if (this.chatArea) {
+            this.chatArea.innerHTML = '';
+            setTimeout(() => this.startChatSimulation(), 2000);
+        }
+    }
+    
+    startChatSimulation() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        this.currentMessageIndex = 0;
+        
+        this.scheduleNextMessage();
+    }
+    
+    scheduleNextMessage() {
+        if (this.currentMessageIndex >= this.messages.length) {
+            setTimeout(() => {
+                this.chatArea.innerHTML = '';
+                this.currentMessageIndex = 0;
+                this.scheduleNextMessage();
+            }, 3000);
+            return;
+        }
+        
+        const message = this.messages[this.currentMessageIndex];
+        
+        setTimeout(() => {
+            this.addMessage(message.type, message.text);
+            this.currentMessageIndex++;
+            this.scheduleNextMessage();
+        }, message.delay);
+    }
+    
+    addMessage(type, text) {
+        const messageEl = document.createElement('div');
+        messageEl.className = `chat-message ${type}`;
+        messageEl.textContent = text;
+        
+        this.chatArea.appendChild(messageEl);
+        this.chatArea.scrollTop = this.chatArea.scrollHeight;
+    }
+}
+
+// Inicialização principal
+document.addEventListener('DOMContentLoaded', () => {
+    const themeManager = new ModernThemeManager();
+    const heartsSystem = new RomanticHeartsSystem();
+    const scrollAnimationManager = new ScrollAnimationManager();
+    const phoneChatSimulator = new PhoneChatSimulator();
+    
+    window.heartsSystem = heartsSystem;
+    window.themeManager = themeManager;
+    
+    console.log('🚀 Sintony Chat - Todos os sistemas carregados com sucesso!');
+    
+    // Easter egg - Konami Code
+    let konamiCode = [];
+    const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+    
+    document.addEventListener('keydown', (e) => {
+        konamiCode.push(e.keyCode);
+        konamiCode = konamiCode.slice(-10);
+        
+        if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+            document.body.style.filter = 'hue-rotate(45deg) saturate(1.5)';
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => heartsSystem.createFloatingHeart(), i * 50);
+            }
+            
+            setTimeout(() => {
+                document.body.style.filter = '';
+            }, 5000);
+            
+            console.log('💕 Easter egg ativado! Modo romântico especial!');
+        }
+    });
+    
+    // Controle de performance para dispositivos móveis
+    const isTouch = 'ontouchstart' in window;
+    if (isTouch && window.innerWidth <= 768) {
+        const style = document.createElement('style');
+        style.textContent = `
+            .floating-heart:nth-child(n+10) { display: none; }
+            .floating-circle { opacity: 0.3; }
+            .phone-mockup { animation-duration: 8s; }
+        `;
+        document.head.appendChild(style);
+    }
+});
+
+// Prevenção de erros e fallbacks
+window.addEventListener('error', (e) => {
+    console.warn('⚠️ Erro capturado:', e.error);
+    
+    if (e.error?.message?.includes('hearts') || e.error?.message?.includes('animation')) {
+        const fallbackStyle = document.createElement('style');
+        fallbackStyle.textContent = `
+            .hearts-container { display: none !important; }
+            .phone-mockup { animation: none !important; }
+            .floating-bg-elements { display: none !important; }
+        `;
+        document.head.appendChild(fallbackStyle);
+        console.log('🔧 Modo fallback ativado - funcionalidade básica mantida');
+    }
+});
+
+// Compatibilidade com navegadores antigos
+if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(callback) {
+        return setTimeout(callback, 1000 / 60);
+    };
+}
+
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function(id) {
+        clearTimeout(id);
+    };
+}
+
+// Polyfill para IntersectionObserver
+if (!window.IntersectionObserver) {
+    console.warn('IntersectionObserver não suportado, usando fallback');
+    
+    window.IntersectionObserver = function(callback) {
+        return {
+            observe: function(target) {
+                target.style.opacity = '1';
+                target.style.transform = 'translateY(0) scale(1)';
+            },
+            unobserve: function() {},
+            disconnect: function() {}
+        };
+    };
+}
+</script>
+</body>
+</html>
