@@ -24,9 +24,9 @@ Foi a segunda vez que desenvolvi algo nesse estilo para esse cliente e investi u
 
 ## 🎥 Demonstração em vídeo
 
-Vou deixar um vídeo demonstrando a tela — acompanhe no meu LinkedIn quando eu publicar.  
-(Adicione aqui o link do LinkedIn após postar.)
+Vou deixar um vídeo demonstrando a tela disponivel no meu LinkedIn para visualização do projeto. 
 
+Obs: Link do linkedin disponivel no perfil  
 ---
 
 ## ▶️ Como visualizar / Demonstração
@@ -57,3 +57,4 @@ O objetivo deste repositório é aprendizado, prototipação e portfólio — si
 
 👩‍💻 Desenvolvido por
 Rebecca Silva — Dev Full Stack
+
