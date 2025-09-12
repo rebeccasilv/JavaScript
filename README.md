@@ -14,7 +14,7 @@
 
 ## 🌸 Sobre o Repositório
 
-Bem-vindas ao meu cantinho especial no GitHub! 🏡 Este repositório reúne uma coleção cuidadosamente curada de projetos desenvolvidos com **HTML**, **CSS** e **JavaScript**. Cada projeto foi pensado com carinho para ser:
+Bem-vindos ao meu cantinho especial no GitHub! 🏡 Este repositório reúne uma coleção cuidadosamente curada de projetos desenvolvidos com **HTML**, **CSS** e **JavaScript**. Cada projeto foi pensado com carinho para ser:
 
 - ✨ **Reutilizável**: Códigos modulares e adaptáveis
 - 🎨 **Personalizável**: Fácil de modificar e estilizar
