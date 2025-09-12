@@ -14,7 +14,7 @@
 
 ## 🌸 Sobre o Repositório
 
-Bem-vindos ao meu cantinho especial no GitHub! 🏡 Este repositório reúne uma coleção cuidadosamente curada de projetos desenvolvidos com **HTML**, **CSS** e **JavaScript**. Cada projeto foi pensado com carinho para ser:
+Bem-vindos ao meu cantinho especial no GitHub! 🏡 Este repositório reúne uma coleção cuidadosamente criada de projetos desenvolvidos com **HTML**, **CSS** e **JavaScript**. Cada projeto foi pensado com carinho para ser:
 
 - ✨ **Reutilizável**: Códigos modulares e adaptáveis
 - 🎨 **Personalizável**: Fácil de modificar e estilizar
@@ -136,12 +136,12 @@ Todos os projetos são facilmente personalizáveis! Você pode:
   
 **Rebecca Silva** 🌺
 
-*Desenvolvedora Frontend apaixonada por criar experiências web únicas e encantadoras*
+*Desenvolvedora Full-Stack apaixonada por criar experiências web únicas e encantadoras*
 
-🎨 Especializada em: **HTML**, **CSS**, **JavaScript**  
+🎨 Especializada em: **HTML**, **CSS**, **JavaScript** ,**PHP**, **Angular**
 💖 Amo: Design responsivo, animações suaves e interfaces intuitivas  
 🌱 Sempre aprendendo: Novas tecnologias e tendências do desenvolvimento web  
-✨ Objetivo: Tornar a web mais bonita e acessível para todas as pessoas  
+✨ Objetivo: Me tornar uma desevolvedora Full-Stck  
 
 </div>
 
