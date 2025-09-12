@@ -21,7 +21,7 @@ Esse tipo de animação pode ser usado em:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/SeuUsuario/NomeDoRepositorio.git
+   git clone https://github.com/rebeccasilv/JavaScript.git
 Abra o arquivo index.html diretamente no navegador.
 
 Aproveite o fundo interativo de partículas ✨.
@@ -31,7 +31,10 @@ Aproveite o fundo interativo de partículas ✨.
 <img src="imagem 2.jpg" alt="Tela do projeto em celular - modo escuro" width="300"/>
 📂 Estrutura do projeto
 
+
 index.html → Arquivo principal do projeto (possui todas as informações dos arquivos inclusive os arquivos de style e script.js)
 
-👩‍💻 Desenvolvido por
+👩‍💻 Desenvolvido por:
+
 Rebecca Silva – Dev Full Stack
+
