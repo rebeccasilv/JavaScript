@@ -1,0 +1,1019 @@
+<?php
+/**
+ * Template Name: Home Receitas Culinárias - Versão Melhorada
+ * Description: Página inicial premium para site de receitas com design moderno
+ */
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+get_header();
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receitas Culinárias - Delícias para todos os gostos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Animações customizadas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* Animação float reduzida para mobile */
+        @media (max-width: 768px) {
+            @keyframes float {
+                0%, 100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-5px);
+                }
+            }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 154, 86, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 154, 86, 0.8);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .animate-slideInRight {
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        /* Gradiente animado */
+        .gradient-animate {
+            background: linear-gradient(-45deg, #ff9a56, #ff6b35, #ff8c42, #ffa726, #f4511e);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Hover effects melhorados */
+        .recipe-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .recipe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .recipe-card:hover::before {
+            left: 100%;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Desabilitar hover effects no mobile */
+        @media (max-width: 768px) {
+            .recipe-card:hover {
+                transform: translateY(-5px) scale(1.01);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        .category-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: white;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        /* Ajustes mobile para category cards */
+        @media (max-width: 768px) {
+            .category-card:hover {
+                transform: translateY(-4px);
+            }
+        }
+        
+        /* Menu mobile */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Glassmorphism effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Image placeholder gradient */
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* Counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Search bar effect */
+        .search-bar {
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar:focus-within {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(255, 154, 86, 0.3);
+        }
+        
+        /* Ajustes mobile para search bar */
+        @media (max-width: 768px) {
+            .search-bar:focus-within {
+                transform: scale(1.01);
+                box-shadow: 0 5px 20px rgba(255, 154, 86, 0.2);
+            }
+        }
+        
+        /* Testimonial card */
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Parallax effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        /* Ajustes de responsividade mobile */
+        @media (max-width: 768px) {
+            .hero-icons {
+                display: none !important;
+            }
+            
+            .category-card .icon-wrapper {
+                width: 60px !important;
+                height: 60px !important;
+            }
+            
+            .category-card i {
+                font-size: 2rem !important;
+            }
+            
+            .stats-section {
+                margin-top: -8px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header com scroll effect -->
+    <header id="header" class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="https://receitasculinarias.com.br/" class="flex items-center space-x-2 cursor-pointer group">
+                    <i class="fas fa-utensils text-3xl text-orange-500 group-hover:rotate-12 transition-transform duration-300"></i>
+                    <h1 class="text-2xl md:text-3xl font-display font-bold text-gray-800">
+                        Receitas <span class="text-orange-500">Culinárias</span>
+                    </h1>
+                </a>
+                
+                <!-- Menu Desktop -->
+                <div class="hidden lg:flex items-center space-x-8 mx-auto">
+                    <a href="https://receitasculinarias.com.br/" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium relative group flex items-center">
+                        <i class="fas fa-home mr-2"></i>Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="https://receitasculinarias.com.br/receitas/receitas-veganas/" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium relative group">
+                        Receitas Veganas
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="https://receitasculinarias.com.br/receitas/cozinha-saudavel/" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium relative group">
+                        Cozinha Saudável
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="https://receitasculinarias.com.br/receitas/receitas-rapidas/" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium relative group">
+                        Receitas Rápidas
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="https://receitasculinarias.com.br/receitas/comidas-tipicas/" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium relative group">
+                        Comidas Típicas
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </div>
+                
+                <!-- Botão Menu Mobile -->
+                <button id="mobile-menu-button" class="lg:hidden text-gray-700 hover:text-orange-500 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-64 h-full bg-white shadow-2xl z-50 lg:hidden">
+            <div class="p-6">
+                <button id="close-menu" class="text-gray-700 hover:text-orange-500 mb-8">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+                <nav class="space-y-4">
+                    <a href="https://receitasculinarias.com.br/" class="block text-gray-700 hover:text-orange-500 transition duration-300 font-medium py-2 flex items-center">
+                        <i class="fas fa-home mr-3"></i>Home
+                    </a>
+                    
+                    <!-- Categorias Mobile (sempre visíveis) -->
+                    <div class="border-t pt-4">
+                        <div class="flex items-center text-orange-500 font-semibold py-2 mb-2">
+                            <i class="fas fa-th-large mr-3"></i>Categorias
+                        </div>
+                        <div class="pl-8 space-y-2">
+                            <a href="https://receitasculinarias.com.br/receitas/receitas-veganas/" class="block text-gray-600 hover:text-orange-500 transition duration-300 py-2 text-sm">
+                                Receitas Veganas
+                            </a>
+                            <a href="https://receitasculinarias.com.br/receitas/cozinha-saudavel/" class="block text-gray-600 hover:text-orange-500 transition duration-300 py-2 text-sm">
+                                Cozinha Saudável
+                            </a>
+                            <a href="https://receitasculinarias.com.br/receitas/receitas-rapidas/" class="block text-gray-600 hover:text-orange-500 transition duration-300 py-2 text-sm">
+                                Receitas Rápidas
+                            </a>
+                            <a href="https://receitasculinarias.com.br/receitas/comidas-tipicas/" class="block text-gray-600 hover:text-orange-500 transition duration-300 py-2 text-sm">
+                                Comidas Típicas
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section Melhorado -->
+    <section class="gradient-animate py-16 md:py-36 relative overflow-hidden">
+        <!-- Elementos decorativos de fundo -->
+        <div class="absolute top-20 left-10 w-48 h-48 md:w-72 md:h-72 bg-white opacity-10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-white opacity-10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center text-white">
+                <div data-aos="fade-down" data-aos-duration="1000">
+                    <span class="inline-block bg-white bg-opacity-20 px-4 py-2 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-semibold mb-4 md:mb-6 glass-effect">
+                        ✨ Mais de 1.000 receitas deliciosas
+                    </span>
+                </div>
+                
+                <h2 class="text-4xl md:text-7xl font-display font-bold mb-4 md:mb-6 px-4" data-aos="fade-up" data-aos-delay="200">
+                    Descubra Sabores<br/>
+                    <span class="text-yellow-200">Incríveis</span>
+                </h2>
+                
+                <p class="text-lg md:text-2xl mb-8 md:mb-10 font-light max-w-3xl mx-auto px-4" data-aos="fade-up" data-aos-delay="400">
+                    Receitas deliciosas, práticas e testadas para todos os momentos do seu dia
+                </p>
+                
+                <!-- Barra de Busca no Hero -->
+                <div class="max-w-2xl mx-auto mb-6 md:mb-8 px-4" data-aos="fade-up" data-aos-delay="600">
+                    <form action="https://receitasculinarias.com.br/" method="get" class="search-bar bg-white rounded-full shadow-2xl p-1 flex items-center gap-2">
+                        <input type="text" name="s" placeholder="Busque por receita ou ingrediente..." class="flex-1 px-4 md:px-6 py-2 md:py-2.5 text-sm md:text-base text-gray-700 focus:outline-none rounded-full">
+                        <button type="submit" class="bg-orange-500 text-white px-4 md:px-6 py-2 md:py-2.5 text-sm md:text-base rounded-full font-semibold hover:bg-orange-600 transition duration-300 flex items-center justify-center whitespace-nowrap">
+                            <i class="fas fa-search mr-2"></i>
+                            Buscar
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center px-4" data-aos="fade-up" data-aos-delay="800">
+                    <a href="#receitas" class="bg-white text-orange-500 px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 w-full sm:w-auto text-center">
+                        <i class="fas fa-utensils mr-2"></i>Explorar Receitas
+                    </a>
+                    <a href="#categorias" class="glass-effect border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:bg-white hover:text-orange-500 transition duration-300 shadow-lg transform hover:scale-105 w-full sm:w-auto text-center">
+                        <i class="fas fa-th-large mr-2"></i>Ver Categorias
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ícones flutuantes decorativos - apenas desktop -->
+        <div class="hero-icons absolute top-1/4 left-10 text-white text-4xl opacity-30 animate-float hidden md:block">
+            <i class="fas fa-cookie-bite"></i>
+        </div>
+        <div class="hero-icons absolute top-1/3 right-20 text-white text-5xl opacity-30 animate-float hidden md:block" style="animation-delay: 0.5s;">
+            <i class="fas fa-pizza-slice"></i>
+        </div>
+        <div class="hero-icons absolute bottom-1/4 left-1/4 text-white text-3xl opacity-30 animate-float hidden md:block" style="animation-delay: 1s;">
+            <i class="fas fa-ice-cream"></i>
+        </div>
+    </section>
+
+    <!-- Estatísticas Animadas -->
+    <section class="py-12 md:py-16 bg-white relative stats-section -mt-8 md:-mt-16 z-20">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl md:rounded-3xl shadow-2xl p-6 md:p-12">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center text-white">
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-book-open text-2xl md:text-4xl mb-2 md:mb-3 opacity-80"></i>
+                        <div class="text-3xl md:text-5xl font-bold mb-1 md:mb-2 counter" data-target="1000">0</div>
+                        <p class="text-xs md:text-base opacity-90 font-medium">Receitas</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-users text-2xl md:text-4xl mb-2 md:mb-3 opacity-80"></i>
+                        <div class="text-3xl md:text-5xl font-bold mb-1 md:mb-2 counter" data-target="50000">0</div>
+                        <p class="text-xs md:text-base opacity-90 font-medium">Usuários Ativos</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-star text-2xl md:text-4xl mb-2 md:mb-3 opacity-80"></i>
+                        <div class="text-3xl md:text-5xl font-bold mb-1 md:mb-2"><span class="counter" data-target="4">0</span>.9</div>
+                        <p class="text-xs md:text-base opacity-90 font-medium">Avaliação Média</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-heart text-2xl md:text-4xl mb-2 md:mb-3 opacity-80"></i>
+                        <div class="text-3xl md:text-5xl font-bold mb-1 md:mb-2 counter" data-target="25000">0</div>
+                        <p class="text-xs md:text-base opacity-90 font-medium">Receitas Favoritas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categorias em Destaque Melhoradas -->
+    <section id="categorias" class="py-16 md:py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider mb-2 block">Explore</span>
+                <h3 class="text-3xl md:text-5xl font-display font-bold text-gray-800 mb-4 px-4">
+                    Categorias Populares
+                </h3>
+                <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto px-4">
+                    Encontre a receita perfeita para cada ocasião e surpreenda-se com novos sabores
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Categoria 1 -->
+                <a href="https://receitasculinarias.com.br/receitas/receitas-veganas/" class="category-card bg-gradient-to-br from-green-400 to-green-600 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center cursor-pointer shadow-xl block" data-aos="fade-up" data-aos-delay="100">
+                    <div class="icon-wrapper bg-white bg-opacity-20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                        <i class="fas fa-leaf text-3xl md:text-4xl animate-float"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold mb-2">Receitas Veganas</h4>
+                    <p class="text-xs md:text-sm opacity-90 mb-2 md:mb-3">Delícias sem origem animal</p>
+                    <span class="text-xs font-semibold bg-white bg-opacity-30 px-2 md:px-3 py-1 rounded-full inline-block">10 receitas</span>
+                </a>
+                
+                <!-- Categoria 2 -->
+                <a href="https://receitasculinarias.com.br/receitas/cozinha-saudavel/" class="category-card bg-gradient-to-br from-pink-400 to-pink-600 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center cursor-pointer shadow-xl block" data-aos="fade-up" data-aos-delay="200">
+                    <div class="icon-wrapper bg-white bg-opacity-20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                        <i class="fas fa-heart text-3xl md:text-4xl animate-float" style="animation-delay: 0.2s;"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold mb-2">Cozinha Saudável</h4>
+                    <p class="text-xs md:text-sm opacity-90 mb-2 md:mb-3">Nutrição e sabor</p>
+                    <span class="text-xs font-semibold bg-white bg-opacity-30 px-2 md:px-3 py-1 rounded-full inline-block">10 receitas</span>
+                </a>
+                
+                <!-- Categoria 3 -->
+                <a href="https://receitasculinarias.com.br/receitas/receitas-rapidas/" class="category-card bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center cursor-pointer shadow-xl block" data-aos="fade-up" data-aos-delay="300">
+                    <div class="icon-wrapper bg-white bg-opacity-20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                        <i class="fas fa-clock text-3xl md:text-4xl animate-float" style="animation-delay: 0.4s;"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold mb-2">Receitas Rápidas</h4>
+                    <p class="text-xs md:text-sm opacity-90 mb-2 md:mb-3">Praticidade no dia a dia</p>
+                    <span class="text-xs font-semibold bg-white bg-opacity-30 px-2 md:px-3 py-1 rounded-full inline-block">10 receitas</span>
+                </a>
+                
+                <!-- Categoria 4 -->
+                <a href="https://receitasculinarias.com.br/receitas/comidas-tipicas/" class="category-card bg-gradient-to-br from-orange-400 to-red-600 rounded-xl md:rounded-2xl p-6 md:p-8 text-white text-center cursor-pointer shadow-xl block" data-aos="fade-up" data-aos-delay="400">
+                    <div class="icon-wrapper bg-white bg-opacity-20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                        <i class="fas fa-flag text-3xl md:text-4xl animate-float" style="animation-delay: 0.6s;"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold mb-2">Comidas Típicas</h4>
+                    <p class="text-xs md:text-sm opacity-90 mb-2 md:mb-3">Sabores regionais</p>
+                    <span class="text-xs font-semibold bg-white bg-opacity-30 px-2 md:px-3 py-1 rounded-full inline-block">10 receitas</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Receitas em Destaque Melhoradas -->
+    <section id="receitas" class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider mb-2 block">Destaques</span>
+                <h3 class="text-3xl md:text-5xl font-display font-bold text-gray-800 mb-4 px-4">
+                    Receitas em Destaque
+                </h3>
+                <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto px-4">
+                    As mais amadas e testadas pelos nossos leitores
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Receita 1 - Sobremesas Veganas -->
+                <a href="https://receitasculinarias.com.br/sobremesas-veganas-irresistiveis-do-brownie-ao-cheesecake-sem-derivados-animais/" class="recipe-card bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-lg block" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-48 md:h-64 bg-gradient-to-br from-green-300 to-green-500 flex items-center justify-center overflow-hidden group">
+                        <i class="fas fa-seedling text-white text-5xl md:text-7xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute top-4 right-4 bg-white text-orange-500 px-2 md:px-3 py-1 rounded-full text-xs font-bold flex items-center">
+                            <i class="fas fa-star mr-1"></i> 4.9
+                        </div>
+                        <div class="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 md:px-3 py-1 rounded-full text-xs font-semibold flex items-center">
+                            <i class="fas fa-eye mr-1"></i> 15.2k
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="bg-green-100 text-green-700 px-2 md:px-3 py-1 rounded-full text-xs font-bold">Vegana</span>
+                            <span class="text-gray-400 text-xs md:text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 45 min
+                            </span>
+                            <span class="text-gray-400 text-xs md:text-sm flex items-center ml-auto">
+                                <i class="fas fa-fire mr-1 text-orange-500"></i> 280 cal
+                            </span>
+                        </div>
+                        <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-2 md:mb-3 hover:text-orange-500 transition-colors">Sobremesas Veganas Irresistíveis</h4>
+                        <p class="text-sm md:text-base text-gray-600 mb-4 line-clamp-2">Do brownie ao cheesecake, aprenda sobremesas sem derivados animais que vão surpreender...</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center group text-sm md:text-base">
+                                Ver Receita 
+                                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                            </span>
+                            <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="far fa-heart text-lg md:text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Receita 2 - Jantar em 15 Minutos -->
+                <a href="https://receitasculinarias.com.br/jantar-em-15-minutos-7-receitas-que-salvam-seu-dia/" class="recipe-card bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-lg block" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-48 md:h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden group">
+                        <i class="fas fa-stopwatch text-white text-5xl md:text-7xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute top-4 right-4 bg-white text-orange-500 px-2 md:px-3 py-1 rounded-full text-xs font-bold flex items-center">
+                            <i class="fas fa-star mr-1"></i> 5.0
+                        </div>
+                        <div class="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 md:px-3 py-1 rounded-full text-xs font-semibold flex items-center">
+                            <i class="fas fa-eye mr-1"></i> 23.5k
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="bg-blue-100 text-blue-700 px-2 md:px-3 py-1 rounded-full text-xs font-bold">Rápida</span>
+                            <span class="text-gray-400 text-xs md:text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 15 min
+                            </span>
+                            <span class="text-gray-400 text-xs md:text-sm flex items-center ml-auto">
+                                <i class="fas fa-fire mr-1 text-orange-500"></i> 420 cal
+                            </span>
+                        </div>
+                        <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-2 md:mb-3 hover:text-orange-500 transition-colors">Jantar em 15 Minutos</h4>
+                        <p class="text-sm md:text-base text-gray-600 mb-4 line-clamp-2">7 receitas práticas e deliciosas que vão salvar seu dia quando o tempo está curto...</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center group text-sm md:text-base">
+                                Ver Receita 
+                                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                            </span>
+                            <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="far fa-heart text-lg md:text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Receita 3 - Comida Mineira -->
+                <a href="https://receitasculinarias.com.br/comida-mineira-autentica-segredos-do-fogao-a-lenha/" class="recipe-card bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-lg block" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative h-48 md:h-64 bg-gradient-to-br from-orange-500 to-red-700 flex items-center justify-center overflow-hidden group">
+                        <i class="fas fa-drumstick-bite text-white text-5xl md:text-7xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute top-4 right-4 bg-white text-orange-500 px-2 md:px-3 py-1 rounded-full text-xs font-bold flex items-center">
+                            <i class="fas fa-star mr-1"></i> 4.8
+                        </div>
+                        <div class="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-2 md:px-3 py-1 rounded-full text-xs font-semibold flex items-center">
+                            <i class="fas fa-eye mr-1"></i> 31.8k
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center gap-2 mb-3 flex-wrap">
+                            <span class="bg-red-100 text-red-700 px-2 md:px-3 py-1 rounded-full text-xs font-bold">Típica</span>
+                            <span class="text-gray-400 text-xs md:text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 90 min
+                            </span>
+                            <span class="text-gray-400 text-xs md:text-sm flex items-center ml-auto">
+                                <i class="fas fa-fire mr-1 text-orange-500"></i> 580 cal
+                            </span>
+                        </div>
+                        <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-2 md:mb-3 hover:text-orange-500 transition-colors">Comida Mineira Autêntica</h4>
+                        <p class="text-sm md:text-base text-gray-600 mb-4 line-clamp-2">Descubra os segredos do fogão a lenha e prepare pratos tradicionais de Minas Gerais...</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-orange-500 font-bold hover:text-orange-600 inline-flex items-center group text-sm md:text-base">
+                                Ver Receita 
+                                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                            </span>
+                            <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="far fa-heart text-lg md:text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Newsletter Melhorada -->
+    <section class="py-16 md:py-20 bg-gradient-to-r from-orange-500 to-orange-600 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-32 h-32 md:w-64 md:h-64 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-40 h-40 md:w-80 md:h-80 bg-white rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center text-white">
+                <div data-aos="fade-up">
+                    <i class="fas fa-envelope-open-text text-5xl md:text-6xl mb-6 md:mb-8 opacity-90"></i>
+                    <h3 class="text-3xl md:text-4xl font-display font-bold mb-4 md:mb-6">
+                        Receba Nossas Melhores Receitas
+                    </h3>
+                    <p class="text-base md:text-xl mb-8 md:mb-10 opacity-90">
+                        Cadastre-se e receba receitas exclusivas, dicas culinárias e muito mais diretamente no seu email!
+                    </p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                        <input type="email" placeholder="Seu melhor email" class="flex-1 px-4 md:px-6 py-3 md:py-4 rounded-full text-gray-700 focus:outline-none focus:ring-4 focus:ring-orange-300 shadow-lg">
+                        <button class="bg-white text-orange-500 px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-gray-100 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 whitespace-nowrap">
+                            <i class="fas fa-paper-plane mr-2"></i>Inscrever-se
+                        </button>
+                    </form>
+                    
+                    <p class="text-xs md:text-sm mt-4 opacity-75">
+                        <i class="fas fa-lock mr-1"></i> Seus dados estão protegidos. Sem spam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testemunhos -->
+    <section class="py-16 md:py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                <span class="text-orange-500 font-semibold text-sm uppercase tracking-wider mb-2 block">Depoimentos</span>
+                <h3 class="text-3xl md:text-5xl font-display font-bold text-gray-800 mb-4 px-4">
+                    O Que Dizem Nossos Leitores
+                </h3>
+                <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto px-4">
+                    Histórias reais de quem transformou sua cozinha com nossas receitas
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Testemunho 1 -->
+                <div class="testimonial-card bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4 md:mb-6">
+                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-lg md:text-2xl mr-4">
+                            M
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-base md:text-lg">Maria Silva</h5>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic text-sm md:text-base">
+                        "As receitas são incríveis! Fáceis de seguir e sempre dão certo. Minha família adora!"
+                    </p>
+                </div>
+                
+                <!-- Testemunho 2 -->
+                <div class="testimonial-card bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4 md:mb-6">
+                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-lg md:text-2xl mr-4">
+                            J
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-base md:text-lg">João Santos</h5>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic text-sm md:text-base">
+                        "Nunca imaginei que cozinhar pudesse ser tão fácil. As receitas veganas são perfeitas!"
+                    </p>
+                </div>
+                
+                <!-- Testemunho 3 -->
+                <div class="testimonial-card bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-4 md:mb-6">
+                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white font-bold text-lg md:text-2xl mr-4">
+                            A
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-base md:text-lg">Ana Costa</h5>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic text-sm md:text-base">
+                        "Site maravilhoso! Encontro receitas para todas as ocasiões. Recomendo muito!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Premium -->
+    <footer class="bg-gray-900 text-white pt-16 md:pt-20 pb-8 md:pb-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
+                <!-- Coluna 1 -->
+                <div data-aos="fade-up">
+                    <div class="flex items-center space-x-2 mb-4 md:mb-6">
+                        <i class="fas fa-utensils text-2xl md:text-3xl text-orange-500"></i>
+                        <h4 class="text-xl md:text-2xl font-display font-bold">
+                            Receitas <span class="text-orange-500">Culinárias</span>
+                        </h4>
+                    </div>
+                    <p class="text-gray-400 mb-4 md:mb-6 text-sm md:text-base leading-relaxed">
+                        Seu destino definitivo para descobrir receitas deliciosas, dicas culinárias e inspiração para transformar cada refeição em um momento especial.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition duration-300">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition duration-300">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Coluna 2 -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="text-lg font-bold mb-4 md:mb-6 text-orange-500">Categorias</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://receitasculinarias.com.br/receitas/receitas-veganas/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Receitas Veganas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/receitas/cozinha-saudavel/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Cozinha Saudável
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/receitas/receitas-rapidas/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Receitas Rápidas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/receitas/comidas-tipicas/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Comidas Típicas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Coluna 3 -->
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="text-lg font-bold mb-4 md:mb-6 text-orange-500">Informações</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://receitasculinarias.com.br/contato/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Contato
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/politica-de-privacidade/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Política de Privacidade
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/politica-de-cookies-br/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Política de Cookies
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/termos-de-uso/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Termos de Uso
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://receitasculinarias.com.br/transparencia/" class="text-gray-400 hover:text-orange-500 transition duration-300 text-sm flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-3 transform group-hover:translate-x-1 transition-transform"></i>Transparência
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Coluna 4 -->
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <h4 class="text-lg font-bold mb-4 md:mb-6 text-orange-500">Fale Conosco</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start text-gray-400 text-sm">
+                            <i class="fas fa-envelope mt-1 mr-3 text-orange-500"></i>
+                            <span>contato@receitasculinarias.com.br</span>
+                        </li>
+                        <li class="flex items-start text-gray-400 text-sm">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-orange-500"></i>
+                            <span>Brasil</span>
+                        </li>
+                        <li class="flex items-start text-gray-400 text-sm">
+                            <i class="fas fa-clock mt-1 mr-3 text-orange-500"></i>
+                            <span>Seg - Sex: 9h às 18h</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Linha de Copyright -->
+            <div class="border-t border-gray-800 pt-6 md:pt-8 mt-6 md:mt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                        &copy; 2025 Receitas Culinárias. Todos os direitos reservados.
+                    </p>
+                    <p class="text-gray-400 text-sm">
+                        Feito com <i class="fas fa-heart text-red-500 mx-1"></i> para amantes da culinária
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Voltar ao Topo Melhorado -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white w-12 h-12 md:w-14 md:h-14 rounded-full shadow-2xl hover:from-orange-600 hover:to-orange-700 transition duration-300 opacity-0 pointer-events-none transform hover:scale-110 z-50">
+        <i class="fas fa-arrow-up text-lg md:text-xl"></i>
+    </button>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- JavaScript -->
+    <script>
+        // Inicializar AOS com ajustes para mobile
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 50,
+            disable: function() {
+                var maxWidth = 768;
+                return window.innerWidth < maxWidth;
+            }
+        });
+
+        // Menu Mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('shadow-xl');
+            } else {
+                header.classList.remove('shadow-xl');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Botão Voltar ao Topo
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+                backToTopButton.classList.add('opacity-100');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+                backToTopButton.classList.remove('opacity-100');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        let hasAnimated = false;
+
+        const animateCounters = () => {
+            if (hasAnimated) return;
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const increment = target / speed;
+                let count = 0;
+
+                const updateCount = () => {
+                    count += increment;
+                    if (count < target) {
+                        counter.textContent = Math.ceil(count).toLocaleString('pt-BR');
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.textContent = target.toLocaleString('pt-BR');
+                    }
+                };
+
+                updateCount();
+            });
+            
+            hasAnimated = true;
+        };
+
+        // Trigger counter animation on scroll
+        const counterSection = document.querySelector('.counter');
+        if (counterSection) {
+            const observerOptions = {
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                    }
+                });
+            }, observerOptions);
+
+            observer.observe(counterSection.closest('section'));
+        }
+
+        // Smooth scroll para links âncora
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Adicionar efeito de hover nos cards de receitas
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        recipeCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+<?php
+get_footer();
+?>
