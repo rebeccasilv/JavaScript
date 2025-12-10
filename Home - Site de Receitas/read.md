@@ -69,13 +69,13 @@ O grande diferencial deste projeto é que ele foi desenvolvido especificamente p
 ## 📸 Demonstração
 
 ### 💻 Desktop
-![Home Desktop - Visão 1] <img src="/imagens/imagem 01.jpeg">
+![Home Desktop - Visão 1] <img src="imagem 01.jpeg">
 
-![Home Desktop - Visão 2] <img src="/imagens/imagem 02.jpeg">
+![Home Desktop - Visão 2] <img src="imagem 02.jpeg">
 
 ### 📱 Mobile
-![Home Mobile - Visão 1] <img src="/imagens/imagem 03.jpeg"> <br>
-![Home Mobile - Visão 2] <img src="/imagens/imagem 04.jpeg">
+![Home Mobile - Visão 1] <img src="imagem 03.jpeg"> <br>
+![Home Mobile - Visão 2] <img src="imagem 04.jpeg">
 
 ---
 
@@ -356,5 +356,6 @@ Este projeto foi desenvolvido aplicando:
 **💡 Dica**: Não esqueça de personalizar os links e adaptar o conteúdo para seu projeto!
 
 Feito com 🧡 para a comunidade WordPress
+
 
 </div>
