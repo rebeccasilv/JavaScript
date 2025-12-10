@@ -355,7 +355,8 @@ Este projeto foi desenvolvido aplicando:
 
 **💡 Dica**: Não esqueça de personalizar os links e adaptar o conteúdo para seu projeto!
 
-Feito com 🧡 para a comunidade WordPress
+Desenvolvido por Rebecca Silva
 
 
 </div>
+
